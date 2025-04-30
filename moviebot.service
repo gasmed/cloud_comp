@@ -1,0 +1,18 @@
+# moviebot.service
+# Поместите этот файл рядом с lab5.yaml
+
+[Unit]
+Description=Movie Recommendation Bot Service
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/usr/bin/java -jar /home/ubuntu/moviebot.jar
+SuccessExitStatus=143
+Type=simple
+Restart=on-failure
+RestartSec=5
+# ExecStop=/bin/kill -15 $MAINPID  # опционально
+
+[Install]
+WantedBy=multi-user.target
