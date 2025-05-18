@@ -85,34 +85,31 @@
 
 - name: Prepare production for deploy
   hosts: tpb-server
-  become: yes
-
+  vars:
+    service_path: moviebot.service
+    terraform_path: ./terraform-openstack
   tasks:
-    - name: Install JDK
-      apt:
-        update_cache: yes
-        name: openjdk-21-jdk-headless
-        state: present
+    - block:
+      - name: Install JDK
+        apt:
+          update_cache: yes
+          name: openjdk-21-jdk-headless
+          state: present
+        become: yes
 
-    - name: Upload moviebot Jar
-      copy:
-        src: moviebot.jar
-        dest: /home/ubuntu/moviebot.jar
-        mode: '0755'
+      - name: Create bot app service
+        copy:
+          src: "{{ service_path }}"
+          dest: /etc/systemd/system/moviebot.service
+          mode: '0777'
+        become: yes
 
-    - name: Upload systemd unit file
-      copy:
-        src: moviebot.service
-        dest: /etc/systemd/system/moviebot.service
-        mode: '0644'
-
-    - name: Reload systemd and start moviebot
-      systemd:
-        daemon_reload: true
-        name: moviebot.service
-        state: started
-        enabled: yes
-
+      - name: Reload services
+        systemd:
+          daemon_reload: true
+          name: botserver
+          state: stopped
+        become: yes
 
       rescue:
        - name: Clean up resources in case of error
