@@ -62,11 +62,12 @@ data "yandex_vpc_network" "existing" {
   name      = "default"
   folder_id = data.external.ya_auth.result.folder_id
 }
-resource "yandex_vpc_subnet" "subnet-1" {
-  name           = "orlov-subnet"
-  zone           = "ru-central1-a"
-  network_id     = data.yandex_vpc_network.existing.id
-  v4_cidr_blocks = ["192.168.200.0/24"]
+// убираем создание новой подсети — будем переиспользовать существующую
+// resource "yandex_vpc_subnet" "subnet-1" { … }
+
+// обращаемся к уже существующей filonov-subnet
+data "yandex_vpc_subnet" "existing" {
+  subnet_id = "e9b1k44oghhnt03igdjo"
 }
 
 resource "yandex_vpc_security_group" "group1" {
