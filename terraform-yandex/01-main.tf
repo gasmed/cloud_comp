@@ -49,7 +49,7 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
+    subnet_id = data.yandex_vpc_subnet.existing.id
     nat       = true
   }
 
