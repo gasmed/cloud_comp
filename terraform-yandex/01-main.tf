@@ -66,7 +66,7 @@ resource "yandex_vpc_subnet" "subnet-1" {
   name           = "orlov-subnet"
   zone           = "ru-central1-a"
   network_id     = data.yandex_vpc_network.existing.id
-  v4_cidr_blocks = ["192.168.199.0/24"]
+  v4_cidr_blocks = ["192.168.200.0/24"]
 }
 
 resource "yandex_vpc_security_group" "group1" {
