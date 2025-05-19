@@ -1,11 +1,9 @@
----
 - name: Create production server on Yandex.Cloud
   hosts: localhost
   connection: local
   vars:
     terraform_rc_path: .terraformrc
-    terraform_path: "{{ playbook_dir }}/terraform-yandex"
-
+    terraform_path: ./terraform-yandex
   tasks:
     - name: Prepare TF (set Yandex mirror)
       copy:
@@ -36,6 +34,7 @@
         ansible_ssh_private_key_file: ~/.ssh/orlov
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
 
+
 - name: Wait for instance to become reachable
   hosts: localhost
   connection: local
@@ -47,7 +46,7 @@
         timeout: 300
 
 - name: Start production database on Yandex instance
-  hosts: tpb-server
+  hosts: yandex-server
   become: yes
   tasks:
     - name: Download MongoDB 7.0 GPG Key (ASCII)
@@ -94,21 +93,14 @@
         name: openjdk-21-jdk-headless
         state: present
 
-    - name: Upload moviebot Jar
-      copy:
-        src: moviebot.jar
-        dest: /home/ubuntu/moviebot.jar
-        mode: '0755'
-
-    - name: Upload systemd unit file
+    - name: Create bot app service
       copy:
         src: "{{ service_path }}"
         dest: /etc/systemd/system/moviebot.service
         mode: '0644'
 
-    - name: Reload systemd and start moviebot
+    - name: Reload systemd and ensure moviebot is stopped
       systemd:
-        daemon_reload: true
-        name: moviebot.service
-        state: started
-        enabled: yes
+        daemon_reload: yes
+        name: moviebot
+        state: stopped
