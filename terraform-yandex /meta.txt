@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: ubuntu
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-rsa ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDLnBSUk7+70GaCyhCncJxmOJOlzIC9yeY6kDe0QBeNOufIdjMH6xTRyGOx3Tfb5LvuAdoIvu8zjxMXsf0ydlR3DWfiSv5j6OUd7H9qbJmIpkilE9QlZcoDf2StN7Gz6qPmzntoS9gkFQ5PEVK2voC0/9l/SOXZwxyaYcGfT2UZjKFCS4Vn4SGZoBvcEWwCYtk87mrNKrCABI0aUK46f1f/rGc2wSHjvTajVRFF5JOo7+o7Kcm9YMVg/LRS88EupXYNv3M6YF8RXZo6Ut+9Mg8uC3uryn6RsDr9E/wszl7UzaIOF1rOYYWh0O9DtF5zYQQs2V0iOAMDoyZjGhS6+ebk5quETXDvjVK4CCWCJlsKox8t4E+RaCS/Bm4xSOTwWNPE2Vs8A+pWRj6eA3OPtXxaT12HpkQdUdaOtn5phNwCw9TyPWk6T35YuOd28+DNW3SsrtKMDuI1bTb7AnpkhcPDl763i3onZYESUgMb4qeE9ouNukUarAAcaoAZ6yVe/OIsOiru7jM4k/ZbmwlzHozePsxJEnt8aHN0tXlxDKyja6FnwpHtgZTqgxAKI+3QudEK3R3j+lTyh/8P3kyWhyVGGBEn9hv53nzFmhW5zo81fQ0qzRiHiGc6/5+1q/KeZLhydh3TP3RoKAmebCwVDVBO9U0O5X1Wq1+rzDLb8BG3XQ== OpenStack orlov key
